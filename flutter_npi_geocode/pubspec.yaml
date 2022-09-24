@@ -33,7 +33,6 @@ dependencies:
     sdk: flutter
 
 #Make flutter package use external dart
-dependency_overrides:
   dart_npi_geocode:
     path: ../
 
