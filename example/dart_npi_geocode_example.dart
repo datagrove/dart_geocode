@@ -21,7 +21,7 @@ void main() async {
   
   try {
     await for (var line in lines) {
-      sample.writeAsString('$line: ${line.length} characters', mode: FileMode.append);
+      await sample.writeAsString('$line: ${line.length} characters', mode: FileMode.append);
       print('$line: ${line.length} characters');
     }
     print("File is closed");
