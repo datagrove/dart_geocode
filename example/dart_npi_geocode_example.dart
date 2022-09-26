@@ -8,14 +8,20 @@ import 'dart:convert';
 void main() async {
   var filePath =
       p.join('/', 'Users', 'rsouthworth', 'downloads', 'npidata_20220911.csv');
+  
+  var sample = File('npi.text');
+
+
   File file = File(filePath);
   Stream<String> lines = file
       .openRead()
       .transform(utf8.decoder)
       .transform(LineSplitter())
       .take(1000);
+  
   try {
     await for (var line in lines) {
+      sample.writeAsString('$line: ${line.length} characters', mode: FileMode.append);
       print('$line: ${line.length} characters');
     }
     print("File is closed");
@@ -24,7 +30,7 @@ void main() async {
   }
 
   //var sample = File('npi.text');
-  // var sink = sample.openWrite();
-  //sink.write(samplelines);
+  //var sink = sample.openWrite();
+  //sink.write(lines);
   //sink.close();
 }
