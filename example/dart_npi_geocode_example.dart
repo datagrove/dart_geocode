@@ -9,7 +9,7 @@ void main() async {
   var filePath =
       p.join('/', 'Users', 'rsouthworth', 'downloads', 'npidata_20220911.csv');
   
-  var sample = File('npi.text');
+  var sample = File('npi.csv');
 
 
   File file = File(filePath);
@@ -21,7 +21,7 @@ void main() async {
   
   try {
     await for (var line in lines) {
-      await sample.writeAsString('$line: ${line.length} characters', mode: FileMode.append);
+      await sample.writeAsString('$line\n', mode: FileMode.append);
       print('$line: ${line.length} characters');
     }
     print("File is closed");
