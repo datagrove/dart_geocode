@@ -28,9 +28,6 @@ void main() async {
   } catch (e) {
     print('Error: $e');
   }
-
-  //var sample = File('npi.text');
-  //var sink = sample.openWrite();
-  //sink.write(lines);
-  //sink.close();
+final fields = await sample.openRead().transform(utf8.decoder).transform(CsvToListConverter()).toList();
+print(fields[0]);
 }
