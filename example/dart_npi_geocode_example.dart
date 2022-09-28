@@ -21,13 +21,12 @@ void main() async {
   
   try {
     await for (var line in lines) {
-      await sample.writeAsString('$line\n', mode: FileMode.append);
-      print('$line: ${line.length} characters');
-    }
-    print("File is closed");
+      await sample.writeAsString('$line\r\n', mode: FileMode.append);
+    };
   } catch (e) {
     print('Error: $e');
   }
-final fields = await sample.openRead().transform(utf8.decoder).transform(CsvToListConverter()).toList();
-print(fields[0]);
+final npilist = File('npi.csv').openRead();  
+final fields = await npilist.transform(utf8.decoder).transform(CsvToListConverter()).toList();
+print(fields[0][0]);
 }
