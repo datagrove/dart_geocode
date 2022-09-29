@@ -6,38 +6,42 @@ import 'dart:async';
 import 'dart:convert';
 
 void main() async {
-  var filePath =
-      p.join('/', 'Users', 'rsouthworth', 'downloads', 'npidata_20220911.csv');
-  
-  var sample = File('npi.csv');
-
-
-  File file = File(filePath);
-  Stream<String> lines = file
-      .openRead()
-      .transform(utf8.decoder)
-      .transform(LineSplitter())
-      .take(1000);
-  
-  try {
-    await for (var line in lines) {
-      await sample.writeAsString('$line\r\n', mode: FileMode.append);
-    };
-  } catch (e) {
-    print('Error: $e');
-  }
 final npilist = File('npi.csv').openRead();  
 final fields = await npilist.transform(utf8.decoder).transform(CsvToListConverter()).toList();
-print(fields[0][0]);
+
+var npiMapList = <Map>[];
 
 for (var field in fields){
-  Provider p = new Provider();
+  if (field[1] != "" && field[0] != "NPI" ){
+    npiMapList.add({
+    'NPI': field[0],
+    'EIN': field[3],
+    'Business Name': field[4],
+    'Provider Address': field[28],
+    'Provider Address 2': field[29],
+    'Provider City': field[30],
+    'Provider State': field[31],
+    'Provider Zip': field[32],
+    'Provider Type': field[47]
+    });
+  }
+/*  Provider p = Provider();
   p.NPI = field[0];
-  p.Provider_First_Line_Business_Practice_Location_Address = field[28];
-  p.Provider_Second_Line_Business_Practice_Location_Address = field[29];
-  p.Provider_Business_Practice_Location_Address_City_Name = field[30];
-  p.Provider_Business_Practice_Location_Address_State_Name = field[31];
-  p.Provider_Business_Practice_Location_Address_Postal_Code = field[32];
+  p.EIN = field[3];
+  p.Provider_Business_Name = field[4];
+  p.Provider_Practice_Location_Address = field[28];
+  p.Provider_Second_Line_Practice_Location_Address = field[29];
+  p.Provider_Practice_City = field[30];
+  p.Provider_Practice_State = field[31];
+  p.Provider_Practice_Postal_Code = field[32];
+  p.Provider_Taxonomy_Code = field[47];
+ 
+  //Convert instance of Provider to Map
+  Map<String, dynamic> mapObject = p.toMap();
+  npiMapList.add(p);
+
   print(p.NPI);
+*/ 
 }
+print(npiMapList);
 }

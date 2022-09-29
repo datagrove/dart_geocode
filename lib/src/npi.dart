@@ -2,10 +2,10 @@ class Provider {
   var NPI; 
 //  var Entity_Type_Code;
 //  var Replacement_NPI;
-  var Employer_Identification_Number_EIN;
-  var Provider_Organization_Name_Legal_Business_Name;
-  var Provider_Last_Name_Legal_Name;
-  var Provider_First_Name;
+  var EIN; //Employer Identification Number (EIN) 
+  var Provider_Business_Name; //Provider Organization Name (Legal Business Name) 
+  var Provider_Last_Name; //Provider Last Name (Legal Name)
+  var Provider_First_Name; //Provider First Name 
 //  var Provider Middle Name;
 //  var Provider Name Prefix Text;
 //  var Provider Name Suffix Text;
@@ -27,12 +27,12 @@ class Provider {
 //  var Provider Business Mailing Address Country Code (If outside U.S.);
 //  var Provider Business Mailing Address Telephone Number;
 //  var Provider Business Mailing Address Fax Number;
-  var Provider_First_Line_Business_Practice_Location_Address;
-  var Provider_Second_Line_Business_Practice_Location_Address;
-  var Provider_Business_Practice_Location_Address_City_Name;
-  var Provider_Business_Practice_Location_Address_State_Name;
-  var Provider_Business_Practice_Location_Address_Postal_Code;
-  var Provider_Business_Practice_Location_Address_Country_Code_If_outside_US;
+  var Provider_Practice_Location_Address; //Provider First Line Business Location Address
+  var Provider_Second_Line_Practice_Location_Address; //Provider Second Line Business Location Address 
+  var Provider_Practice_City; //Provider Business Location Address City Name
+  var Provider_Practice_State; //Provider Business Location Address State Name
+  var Provider_Practice_Postal_Code; //Provider Business Location Address Postal Code
+  var Provider_Practice_Country_Code; //Provider Business Location Address Country Code (If outside U.S.) 
 //  var Provider Business Practice Location Address Telephone Number;
 //  var Provider Business Practice Location Address Fax Number;
 //  var Provider Enumeration Date;
@@ -46,7 +46,7 @@ class Provider {
 //  var Authorized Official Middle Name;
 //  var Authorized Official Title or Position;
 //  var Authorized Official Telephone Number;
-//  var Healthcare Provider Taxonomy Code_1;
+    var Provider_Taxonomy_Code; //Healthcare Provider Taxonomy Code_1
 //  var Provider License Number_1;
 //  var Provider License Number State Code_1;
 //  var Healthcare Provider Primary Taxonomy Switch_1;
@@ -329,4 +329,32 @@ class Provider {
 //  var Healthcare Provider Taxonomy Group_14;
 //  var Healthcare Provider Taxonomy Group_15;
 //  var Certification Date;
+
+/*
+Provider({
+  this.NPI
+  this.EIN
+  this.Provider_Business_Name
+  this.Provider_Practice_Location_Address;
+  this.Provider_Second_Line_Practice_Location_Address;
+  this.Provider_Practice_City;
+  this.Provider_Practice_State;
+  this.Provider_Practice_Postal_Code;
+  this.Provider_Taxonomy_Code
+});
+*/
+
+//Method to convert Provider to Map
+Map<String, dynamic> toMap() => {
+  'NPI': NPI,
+  'EIN': EIN,
+  'Business Name': Provider_Business_Name,
+  'Provider Address': Provider_Practice_Location_Address,
+  'Provider Address 2': Provider_Second_Line_Practice_Location_Address,
+  'Provider City': Provider_Practice_City,
+  'Provider State': Provider_Practice_State,
+  'Provider Zip': Provider_Practice_Postal_Code,
+  'Provider Type': Provider_Taxonomy_Code,
+};
+
 }
