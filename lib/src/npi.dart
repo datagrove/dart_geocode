@@ -7,9 +7,9 @@ class Provider {
   var Provider_Last_Name; //Provider Last Name (Legal Name)
   var Provider_First_Name; //Provider First Name 
 //  var Provider Middle Name;
-//  var Provider Name Prefix Text;
+  var Provider_Name_Prefix; //Provider Name Prefix Text
 //  var Provider Name Suffix Text;
-//  var Provider Credential Text;
+  var Provider_Credential; //Provider Credential Text
 //  var Provider Other Organization Name;
 //  var Provider Other Organization Name Type Code;
 //  var Provider Other Last Name;
@@ -349,6 +349,10 @@ Map<String, dynamic> toMap() => {
   'NPI': NPI,
   'EIN': EIN,
   'Business Name': Provider_Business_Name,
+  'First Name': Provider_First_Name,
+  'Last Name': Provider_Last_Name,
+  'Name Prefix': Provider_Name_Prefix,
+  'Credential': Provider_Credential,
   'Provider Address': Provider_Practice_Location_Address,
   'Provider Address 2': Provider_Second_Line_Practice_Location_Address,
   'Provider City': Provider_Practice_City,

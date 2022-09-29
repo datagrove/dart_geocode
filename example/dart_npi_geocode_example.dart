@@ -17,6 +17,10 @@ for (var field in fields){
     'NPI': field[0],
     'EIN': field[3],
     'Business Name': field[4],
+    'First Name': field[6],
+    'Last Name': field[5],
+    'Name Prefix': field[8],
+    'Credential': field[10],
     'Provider Address': field[28],
     'Provider Address 2': field[29],
     'Provider City': field[30],
@@ -25,7 +29,14 @@ for (var field in fields){
     'Provider Type': field[47]
     });
   }
-/*  Provider p = Provider();
+}
+print(npiMapList);
+}
+
+
+/*  Scrap for Now
+
+Provider p = Provider();
   p.NPI = field[0];
   p.EIN = field[3];
   p.Provider_Business_Name = field[4];
@@ -42,6 +53,3 @@ for (var field in fields){
 
   print(p.NPI);
 */ 
-}
-print(npiMapList);
-}
