@@ -15,3 +15,4 @@ dev_dependencies:
 
 dependencies:
   csv: ^5.0.1
+  http: ^0.13.5

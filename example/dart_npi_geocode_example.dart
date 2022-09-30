@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 void main() async {
 final npilist = File('npi.csv').openRead();  
@@ -30,7 +31,19 @@ for (var field in fields){
     });
   }
 }
-print(npiMapList);
+print(npiMapList.length);
+
+Future<Album> fetchAlbum() async{
+  final response = await http
+    .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+
+  if (response.statusCode == 200){
+    print(Album.fromJson(jsonDecode(response.body)));
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
 }
 
 
