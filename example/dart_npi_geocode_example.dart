@@ -31,18 +31,24 @@ for (var field in fields){
     });
   }
 }
-print(npiMapList.length);
+print(npiMapList[0]);
 
-Future<Album> fetchAlbum() async{
-  final response = await http
-    .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
-
-  if (response.statusCode == 200){
-    print(Album.fromJson(jsonDecode(response.body)));
-  } else {
-    throw Exception('Failed to load album');
-  }
+// var url = Uri.parse('https://nominatim.openstreetmap.org/search?street=5+JONATHAN+MORRIS+CIRCLE&state=PA&postalcode=19063&format=json&limit=2');
+for (var map in npiMapList){
+  var url = Uri(
+  scheme:'https',
+  host: 'nominatim.openstreetmap.org',
+  path: '/search',
+  queryParameters: {'street': map['Provider Address'], 'state': map['Provider State'] , 'postalcode': map['Provider Zip'].substring(0,5), 'format':'json', 'limit': '2'}
+);
+print(url);
+var response = await http.get(url);
+if (response.statusCode == 200){
+  response.jsonDecode(response.body);
+  print(['lat'])
 }
+}
+
 
 }
 
