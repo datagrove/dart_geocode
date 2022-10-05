@@ -9,7 +9,7 @@ void main() async {
   var filePath =
       p.join('/', 'Users', 'rsouthworth', 'downloads', 'npidata_20220911.csv');
   
-  var sample = File('npi.csv');
+  var sample = File('npi_original.csv');
 
 
   File file = File(filePath);

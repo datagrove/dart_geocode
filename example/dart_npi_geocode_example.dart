@@ -32,34 +32,27 @@ for (var field in fields){
     });
   }
 }
-print(npiMapList[0]);
+print(npiMapList);
 
 // var url = Uri.parse('https://nominatim.openstreetmap.org/search?street=5+JONATHAN+MORRIS+CIRCLE&state=PA&postalcode=19063&format=json&limit=2');
 for (var map in npiMapList){
-  await Future.delayed(Duration(seconds: 1));
-  var url = Uri(
-  scheme:'https',
-  host: 'nominatim.openstreetmap.org',
-  path: '/search',
-  queryParameters: {'street': map['Provider Address'], 'state': map['Provider State'] , 'postalcode': map['Provider Zip'].substring(0,5), 'format':'json', 'limit': '2'}
-);
-print(url);
-var response = await http.get(url);
-if (response.statusCode == 200){
-  var decode = jsonDecode(response.body);
-  if (response.body != '[]'){
-  map['lat'] = double.parse(decode[0]['lat']);
-  map['lon'] = double.parse(decode[0]['lon']);
+  print(map['NPI']);
+  var response = await nominatim_geocode(map['Provider Zip'], address: map['Provider Address'], state: map['Provider State']);
+  if (response.statusCode == 200){ //If response is OK decode response
+    var decode = jsonDecode(response.body);
+      if (response.body != '[]'){ //if response contains results parse Lat/Long of first result
+        map['lat'] = double.parse(decode[0]['lat']);
+        map['lon'] = double.parse(decode[0]['lon']);
+      }
+  };
+  if (map.containsKey('lat')){ //if the map has a location calculate TMS 
+    var zoom = 14;
+    var n = 1 << zoom;
+    map['xtile'] = n * ((map['lon']+180)/360);
+    var lat_rad = map['lat']*(pi/180);
+    map['ytile'] = (n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2; //should calculate the Y tile location for the given zoom level but does not return correct result.
+    map['zoom'] = zoom;
   }
-};
-if (map.containsKey('lat')){
-var zoom = 14;
-var n = 1 << zoom;
-map['xtile'] = n * ((map['lon']+180)/360);
-var lat_rad = map['lat']*(pi/180);
-map['ytile'] = (n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2;
-map['zoom'] = zoom;
-}
 }
 
 print(npiMapList);

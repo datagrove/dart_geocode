@@ -19,7 +19,7 @@ class Album {
   }
 }
 
-nominatim_geocode(postal_code,{address, state}) async{
+nominatim_geocode(var postal_code,{var address, var state}) async{
   await Future.delayed(Duration(seconds: 1));
   var url = Uri(
   scheme:'https',
