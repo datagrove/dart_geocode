@@ -25,8 +25,8 @@ nominatim_geocode(postal_code,{address, state}) async{
   scheme:'https',
   host: 'nominatim.openstreetmap.org',
   path: '/search',
-  queryParameters: {'street': address, 'state': state , 'postalcode': postal_code.substring(0,5), 'format':'json', 'limit': '2'}
+  queryParameters: {'street': address, 'state': state , 'country': 'USA' , 'postalcode': postal_code.substring(0,5), 'format':'json', 'limit': '2'}
   );
-var response = await http.get(url);
-return response.body;
+  var response = await http.get(url);
+  return response;
 }
