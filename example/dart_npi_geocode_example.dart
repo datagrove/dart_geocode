@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
 void main() async {
 final npilist = File('npi.csv').openRead();  
@@ -35,6 +36,7 @@ print(npiMapList[0]);
 
 // var url = Uri.parse('https://nominatim.openstreetmap.org/search?street=5+JONATHAN+MORRIS+CIRCLE&state=PA&postalcode=19063&format=json&limit=2');
 for (var map in npiMapList){
+  await Future.delayed(Duration(seconds: 1));
   var url = Uri(
   scheme:'https',
   host: 'nominatim.openstreetmap.org',
@@ -44,11 +46,23 @@ for (var map in npiMapList){
 print(url);
 var response = await http.get(url);
 if (response.statusCode == 200){
-  response.jsonDecode(response.body);
-  print(['lat'])
+  var decode = jsonDecode(response.body);
+  if (response.body != '[]'){
+  map['lat'] = double.parse(decode[0]['lat']);
+  map['lon'] = double.parse(decode[0]['lon']);
+  }
+};
+if (map.containsKey('lat')){
+var zoom = 14;
+var n = 1 << zoom;
+map['xtile'] = n * ((map['lon']+180)/360);
+var lat_rad = map['lat']*(pi/180);
+map['ytile'] = (n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2;
+map['zoom'] = zoom;
 }
 }
 
+print(npiMapList);
 
 }
 
