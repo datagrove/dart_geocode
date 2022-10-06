@@ -44,9 +44,9 @@ parse_nominatim_response(var response,Map map){
   if (map.containsKey('lat')){ //if the map has a location calculate TMS 
     var zoom = 14;
     var n = 1 << zoom;
-    map['xtile'] = n * ((map['lon']+180)/360);
+    map['xtile'] = (n * ((map['lon']+180)/360)).floor();
     var lat_rad = map['lat']*(pi/180);
-    map['ytile'] = (n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2; //should calculate the Y tile location for the given zoom level but does not return correct result.
+    map['ytile'] = ((n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2).floor(); //should calculate the Y tile location for the given zoom level but does not return correct result.
     map['zoom'] = zoom;
   }
   return map;

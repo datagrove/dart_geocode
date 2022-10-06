@@ -58,9 +58,16 @@ print(npiMapList);
 var locations = File('npi_locations.csv');
 try {
     for (var provider in npiMapList) {
-      var info = provider.toString();
-      info = info.replaceAll(new RegExp(r'[{}]'),'');
-      await locations.writeAsString('$info\r\n', mode: FileMode.append);
+      var mapList = [];
+      provider.values.forEach((value){
+        mapList.add(value);
+      }
+      );
+      var info = mapList.toString();
+      var infoBrackets = info.substring(1,info.length -1);
+      var values = infoBrackets.split(', ');
+      var csvValues = values.map((value)=>'"$value"').join(', ');
+      await locations.writeAsString('$csvValues\r\n', mode: FileMode.append);
     };
   } catch (e) {
     print('Error: $e');
