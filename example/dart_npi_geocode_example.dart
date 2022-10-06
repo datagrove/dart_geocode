@@ -38,44 +38,21 @@ print(npiMapList);
 for (var map in npiMapList){
   print(map['NPI']);
   var response = await nominatim_geocode(map['Provider Zip'], address: map['Provider Address'], state: map['Provider State']);
-  if (response.statusCode == 200){ //If response is OK decode response
-    var decode = jsonDecode(response.body);
-      if (response.body != '[]'){ //if response contains results parse Lat/Long of first result
-        map['lat'] = double.parse(decode[0]['lat']);
-        map['lon'] = double.parse(decode[0]['lon']);
-      }
-  };
-  if (map.containsKey('lat')){ //if the map has a location calculate TMS 
-    var zoom = 14;
-    var n = 1 << zoom;
-    map['xtile'] = n * ((map['lon']+180)/360);
-    var lat_rad = map['lat']*(pi/180);
-    map['ytile'] = (n * (1-((log((tan(lat_rad))+(1/(cos(lat_rad))))/log(2))/pi)))/2; //should calculate the Y tile location for the given zoom level but does not return correct result.
-    map['zoom'] = zoom;
+  parse_nominatim_response(response, map);
+  if (map.containsKey('lat')){
+    continue;
+  } else {
+    var response_2 = await nominatim_geocode(map['Provider Zip'], address: map['Provider Address 2'], state: map['Provider State']);
+    parse_nominatim_response(response_2, map);
+    if (map.containsKey('lat')){
+    continue;
+    } else {
+    var response_3 = await nominatim_geocode(map['Provider Zip']);
+    parse_nominatim_response(response_3, map);
+    };
   }
 }
 
 print(npiMapList);
 
 }
-
-
-/*  Scrap for Now
-
-Provider p = Provider();
-  p.NPI = field[0];
-  p.EIN = field[3];
-  p.Provider_Business_Name = field[4];
-  p.Provider_Practice_Location_Address = field[28];
-  p.Provider_Second_Line_Practice_Location_Address = field[29];
-  p.Provider_Practice_City = field[30];
-  p.Provider_Practice_State = field[31];
-  p.Provider_Practice_Postal_Code = field[32];
-  p.Provider_Taxonomy_Code = field[47];
- 
-  //Convert instance of Provider to Map
-  Map<String, dynamic> mapObject = p.toMap();
-  npiMapList.add(p);
-
-  print(p.NPI);
-*/ 

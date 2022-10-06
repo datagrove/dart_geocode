@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dart_npi_geocode",
+            "request": "launch",
+            "type": "dart",
+            "program": "example/dart_npi_geocode_example.dart" 
+        },
+        {
+            "name": "flutter_npi_geocode",
+            "cwd": "flutter_npi_geocode",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_npi_geocode (profile mode)",
+            "cwd": "flutter_npi_geocode",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_npi_geocode (release mode)",
+            "cwd": "flutter_npi_geocode",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
