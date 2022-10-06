@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:math';
+import 'dart:collection';
 
 void main() async {
 final npilist = File('npi.csv').openRead();  
@@ -54,5 +55,14 @@ for (var map in npiMapList){
 }
 
 print(npiMapList);
-
+var locations = File('npi_locations.csv');
+try {
+    for (var provider in npiMapList) {
+      var info = provider.toString();
+      info = info.replaceAll(new RegExp(r'[{}]'),'');
+      await locations.writeAsString('$info\r\n', mode: FileMode.append);
+    };
+  } catch (e) {
+    print('Error: $e');
+  }
 }
