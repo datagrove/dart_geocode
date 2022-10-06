@@ -54,9 +54,17 @@ for (var map in npiMapList){
   }
 }
 
-print(npiMapList);
 var locations = File('npi_locations.csv');
 try {
+  var headerList = [];
+  npiMapList[0].keys.forEach((key){
+    headerList.add(key);
+  });
+  var headerString = headerList.toString();
+  var headerBrackets = headerString.substring(1,headerString.length -1);
+  var headerValues = headerBrackets.split(', ');
+  var csvHeader = headerValues.map((value)=>'"$value"').join(', ');
+  await locations.writeAsString('$csvHeader\r\n', mode: FileMode.write);
     for (var provider in npiMapList) {
       var mapList = [];
       provider.values.forEach((value){
