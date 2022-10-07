@@ -11,8 +11,13 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Current design is to take the public NPI file from https://download.cms.gov/nppes/NPI_Files.html and parse it in order to geocode the locations of providers.
+
+get_sample.dart parses the csv file downloaded from CMS (currently limits the results to first 1000 entries for testing/building purposes).
+
+Running dart_npi_geocode_example.dart creates a file called npi_locations.csv with all active providers in the input file npi.csv
+    - Geocoding calls are made to the nominatim servers which have a geocoding limit of one request per second, as a result the geocode method is coded to contain a 1 second delay on each geocode request
+    - For better results on the NPI file the geocode function is hard coded to use USA as the country value in the search parameters
 
 ## Features
 
@@ -37,3 +42,6 @@ const like = 'sample';
 TODO: Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
+
+## To Do
+
