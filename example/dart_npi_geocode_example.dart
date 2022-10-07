@@ -41,15 +41,18 @@ for (var map in npiMapList){
   var response = await nominatim_geocode(map['Provider Zip'], address: map['Provider Address'], state: map['Provider State']);
   parse_nominatim_response(response, map);
   if (map.containsKey('lat')){
+    map['Accuracy'] = "No City";
     continue;
   } else {
     var response_2 = await nominatim_geocode(map['Provider Zip'], address: map['Provider Address 2'], state: map['Provider State']);
     parse_nominatim_response(response_2, map);
     if (map.containsKey('lat')){
-    continue;
+      map['Accuracy'] = "No City";
+      continue;
     } else {
     var response_3 = await nominatim_geocode(map['Provider Zip']);
     parse_nominatim_response(response_3, map);
+    map['Accuracy'] = "Zip Only";
     };
   }
 }
