@@ -6,8 +6,6 @@ void main() {
   runApp(const MyApp());
 }
 
-var awesome = Awesome();
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -87,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'awesome: ${awesome.isAwesome}',
+              'awesome',
             ),
           ],
         ),
