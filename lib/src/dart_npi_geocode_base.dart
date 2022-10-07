@@ -3,24 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'dart:convert';
 
-/// Checks if you are awesome. Spoiler: you are.
-class Album {
-  final int id;
-  final String title;
-
-  const Album({
-    required this.id,
-    required this.title,
-  });
-
-  factory Album.fromJson(Map<String,dynamic> json){
-    return Album(
-      id: json['id'],
-      title: json['title'],
-    );
-  }
-}
-
 nominatim_geocode(var postal_code,{var address, var state}) async{
   await Future.delayed(Duration(seconds: 1));
   var url = Uri(
